@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- FPS Edge home-screen app: holds the FPS logo icon and opens the FPS Edge iPhone page full screen.
+     The Edge key is NOT in this file. It comes from the link you open once (…/?k=KEY) and is kept on the phone. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="FPS Edge">
+<meta name="theme-color" content="#1f2227">
+<meta name="robots" content="noindex">
+<title>FPS Edge</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  html,body{margin:0;height:100%;background:#2b2f36;overflow:hidden}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#2b2f36}
+  .msg{font:16px/1.5 system-ui,-apple-system,sans-serif;color:#e9ebee;padding:40px 24px;text-align:center}
+  .msg img{width:96px;height:96px;border-radius:20px;display:block;margin:0 auto 18px}
+</style>
+</head>
+<body>
+<script>
+  // The FPS Edge web app (/exec link). Only this part is in the file; the key is not.
+  var EXEC = 'https://script.google.com/macros/s/AKfycbwWsgrpMDjzneBsaMbbh4g5jQuPZaa52kPbQkIn7NpOhHAMSDpZ2QUEGqP1RE3G16oznw/exec';
+  var k = new URLSearchParams(location.search).get('k') || '';
+  try { if (k) localStorage.setItem('fps.edge.k', k); else k = localStorage.getItem('fps.edge.k') || ''; } catch (e) {}
+  if (/^[a-f0-9]{16,64}$/i.test(k)) {
+    var f = document.createElement('iframe');
+    f.src = EXEC + '?k=' + encodeURIComponent(k) + '&view=phone';
+    f.title = 'FPS Edge';
+    f.allow = 'clipboard-write';
+    document.body.appendChild(f);
+  } else {
+    document.body.innerHTML = '<div class="msg"><img src="apple-touch-icon.png" alt="">This link is missing its key.<br>Open the FPS Edge link that ends in <b>?k=…</b> (on the FPS Edge sheet, Edge &gt; Show iPhone link).</div>';
+  }
+</script>
+</body>
+</html>
